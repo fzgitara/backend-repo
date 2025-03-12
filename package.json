@@ -22,9 +22,11 @@
   },
   "homepage": "https://github.com/fzgitara/backend-repo#readme",
   "dependencies": {
+    "@google-cloud/storage": "^7.15.2",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "firebase": "^11.4.0"
+    "firebase": "^11.4.0",
+    "firebase-admin": "^13.2.0"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",

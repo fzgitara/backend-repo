@@ -1,13 +1,21 @@
 class User {
   id: string;
   username: string;
-  email: string;
-  password: string;
-  constructor(id: string, username: string, email: string, password: string) {
+  totalAverageWeightRatings: number;
+  numberOfRents: number;
+  recentlyActive: number;
+  constructor(
+    id: string,
+    username: string,
+    totalAverageWeightRatings: number,
+    numberOfRents: number,
+    recentlyActive: number
+  ) {
     (this.id = id),
     (this.username = username),
-    (this.email = email),
-    (this.password = password)
+    (this.totalAverageWeightRatings = totalAverageWeightRatings),
+    (this.numberOfRents = numberOfRents),
+    (this.recentlyActive = recentlyActive)
   }
 };
 
