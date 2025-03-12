@@ -1,7 +1,7 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import firebase from '../config/firebaseConfig';
 import User from '../entities/user';
-import admin from 'firebase-admin';
+
 import {
   getFirestore,
   addDoc,
@@ -11,8 +11,15 @@ import {
   doc,
   updateDoc
 } from 'firebase/firestore';
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut
+} from 'firebase/auth';
 
 const db = getFirestore(firebase);
+const auth = getAuth(firebase);
 
 export const createUser = async (req: Request, res: Response) => {
   try {
@@ -74,6 +81,37 @@ export const updateUserById = async (req: Request, res: Response) => {
 
     res.status(200).send('User updated successfully');
     } catch (error: any) {
+    res.status(400).send(error.message);
+  }
+};
+
+export const register = async (req: Request, res: Response) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  try {
+    await createUserWithEmailAndPassword(auth, email, password);
+    res.status(200).send('Register success');
+  } catch (error: any) {
+    res.status(400).send(error.message);
+  }
+};
+
+export const login = async (req: Request, res: Response) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    res.status(200).send('Login success');
+  } catch (error: any) {
+    res.status(400).send(error.message);
+  }
+};
+
+export const logout = async (req: Request, res: Response) => {
+  try {
+    await signOut(auth);
+    res.status(200).send('Logout success');
+  } catch (error: any) {
     res.status(400).send(error.message);
   }
 };
