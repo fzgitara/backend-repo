@@ -104,8 +104,7 @@ export const login = async (req: Request, res: Response) => {
     const idToken = userCredential._tokenResponse.idToken;
     if (idToken) {
       res.cookie('access_token', idToken, { httpOnly: true })
-      console.log(req.cookies)
-      res.status(200).send('Login success');
+      res.status(200).send({ user: email, token: idToken });
     } else {
       res.status(500).send('Internal server error');
     }
