@@ -1,5 +1,6 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
+import cookies from 'cookie-parser';
 
 import routes from '../routes/userRoutes';
 
@@ -7,11 +8,8 @@ dotenv.config();
 const app: Express = express();
 const port = process.env.PORT;
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Hello World!');
-});
-
 app.use(express.json());
+app.use(cookies());
 app.use('/', routes);
 
 app.listen(port, () => {

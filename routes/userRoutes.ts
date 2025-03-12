@@ -9,14 +9,14 @@ import {
   login,
   logout
 } from '../controller/api';
-import { isUserSignedIn } from '../middleware/authMiddleware';
+import { verifyToken } from '../middleware/authMiddleware';
 
 const router = Router();
 
-router.post('/create-user-data', isUserSignedIn, createUser);
-router.get('/fetch-all-user-data', isUserSignedIn, fetchAllUsers);
-router.get('/fetch-user-data/:id', isUserSignedIn, fetchUserById);
-router.put('/update-user-data/:id', isUserSignedIn, updateUserById);
+router.post('/create-user-data', verifyToken, createUser);
+router.get('/fetch-all-user-data', verifyToken, fetchAllUsers);
+router.get('/fetch-user-data/:id', verifyToken, fetchUserById);
+router.put('/update-user-data/:id', verifyToken, updateUserById);
 router.post('/register', register);
 router.post('/login', login);
 router.post('/logout', logout);

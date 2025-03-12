@@ -100,8 +100,15 @@ export const login = async (req: Request, res: Response) => {
   const email = req.body.email;
   const password = req.body.password;
   try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    res.status(200).send('Login success');
+    const userCredential: any = await signInWithEmailAndPassword(auth, email, password);
+    const idToken = userCredential._tokenResponse.idToken;
+    if (idToken) {
+      res.cookie('access_token', idToken, { httpOnly: true })
+      console.log(req.cookies)
+      res.status(200).send('Login success');
+    } else {
+      res.status(500).send('Internal server error');
+    }
   } catch (error: any) {
     res.status(400).send(error.message);
   }
@@ -110,6 +117,7 @@ export const login = async (req: Request, res: Response) => {
 export const logout = async (req: Request, res: Response) => {
   try {
     await signOut(auth);
+    res.clearCookie('access_token');
     res.status(200).send('Logout success');
   } catch (error: any) {
     res.status(400).send(error.message);

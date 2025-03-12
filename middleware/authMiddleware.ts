@@ -1,12 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
-import firebase from '../config/firebaseConfig';
-import { getAuth } from 'firebase/auth';
 
-const auth = getAuth(firebase);
-
-export const isUserSignedIn = (req: Request, res: Response, next: NextFunction) => {
-  const user = auth.currentUser;
-  if (user) {
+export const verifyToken = (req: Request, res: Response, next: NextFunction) => {
+  console.log(req.cookies)
+  const idToken = req.cookies?.access_token;
+  if (idToken) {
     next();
   } else {
     res.status(401).send('User not signed in');
