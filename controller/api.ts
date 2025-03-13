@@ -103,7 +103,7 @@ export const login = async (req: Request, res: Response) => {
     const userCredential: any = await signInWithEmailAndPassword(auth, email, password);
     const idToken = userCredential._tokenResponse.idToken;
     if (idToken) {
-      res.cookie('access_token', idToken, { httpOnly: true })
+      // res.cookie('access_token', idToken, { httpOnly: false })
       res.status(200).send({ user: email, token: idToken });
     } else {
       res.status(500).send('Internal server error');
